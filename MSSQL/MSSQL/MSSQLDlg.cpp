@@ -334,7 +334,7 @@ void CMSSQLDlg::OnBnClickedEditButton() {
 
 	// 사용자에게 수정 확인 메시지
 	CString message;
-	message.Format(_T("Part No: %s, Quantity: %s로 수정하시겠습니까?"), newPartNo, newQuantity);
+	message.Format(_T("품번: %s, 수량: %s로 수정하시겠습니까?"), newPartNo, newQuantity);
 	if (AfxMessageBox(message, MB_YESNO | MB_ICONQUESTION) == IDNO) {
 		return; // 사용자가 '아니오'를 선택하면 수정하지 않음
 	}
