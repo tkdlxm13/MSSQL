@@ -49,7 +49,7 @@ BOOL CMSSQLDlg::OnInitDialog() {
 	// 텍스트 컨트롤에 폰트 적용
 	m_staticText.SetFont(&m_font); // m_staticText는 CStatic 변수
 
-	// COM 라이브러리 초기화
+								   // COM 라이브러리 초기화
 	HRESULT hr = CoInitialize(NULL);
 	if (FAILED(hr)) {
 		AfxMessageBox(_T("COM 라이브러리 초기화 실패"));
@@ -476,7 +476,7 @@ void CMSSQLDlg::OnPaint() {
 	}
 }
 
-void CMSSQLDlg::OnSysCommand(UINT nID, LONG lParam) {
+void CMSSQLDlg::OnSysCommand(UINT nID, LPARAM lParam) {
 	CDialogEx::OnSysCommand(nID, lParam);
 }
 
