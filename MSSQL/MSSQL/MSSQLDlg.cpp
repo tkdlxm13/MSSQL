@@ -139,9 +139,18 @@ void CMSSQLDlg::OnBnClickedAddButton() {
 	m_editQuantity.GetWindowText(quantity);
 	m_editDate.GetWindowText(date);
 
+	// 입력 필드가 비어 있는지 확인
 	if (partNo.IsEmpty() || quantity.IsEmpty() || date.IsEmpty()) {
 		AfxMessageBox(_T("모든 필드를 입력해야 합니다."));
 		return;
+	}
+
+	// 수량이 숫자인지 확인하는 유효성 검사
+	for (int i = 0; i < quantity.GetLength(); i++) {
+		if (!_istdigit(quantity[i])) {
+			AfxMessageBox(_T("수량은 0포함 이상의 숫자만 입력해야 합니다."));
+			return;
+		}
 	}
 
 	// 날짜와 시간을 현재로 설정
@@ -169,7 +178,7 @@ void CMSSQLDlg::OnBnClickedAddButton() {
 		AfxMessageBox(_T("데이터가 추가되었습니다."));
 		conn->Close();
 	}
-	catch (_com_error &e) {
+	catch (_com_error& e) {
 		CString errorMsg(e.ErrorMessage());
 		AfxMessageBox(_T("데이터 추가 중 오류 발생: ") + errorMsg);
 	}
