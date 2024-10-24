@@ -212,12 +212,12 @@ void CMSSQLDlg::OnBnClickedSearchButton() {
 		// 리스트 클리어
 		m_listResult.DeleteAllItems();  // 리스트 아이템 삭제
 
-										// 검색 결과를 리스트에 추가
+		// 검색 결과를 리스트에 추가
 		int nItem = 0;  // 리스트 아이템 인덱스 초기화
 		CString quantity, date;  // 수량, 날짜를 저장할 변수
 
 		while (!rs->EndOfFile) {  // 결과의 끝에 도달할 때까지 반복
-								  // 데이터 가져오기
+			// 데이터 가져오기
 			CString partNo = (LPCTSTR)(_bstr_t)rs->Fields->Item["partNo"]->Value;  // 품번 가져오기
 			quantity = (LPCTSTR)(_bstr_t)rs->Fields->Item["quantity"]->Value;  // 수량 가져오기
 
