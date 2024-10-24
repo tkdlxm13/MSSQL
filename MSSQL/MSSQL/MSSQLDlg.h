@@ -33,7 +33,7 @@ protected:
 	afx_msg void OnBnClickedRefreshButton(); // 새로 고침 버튼 클릭 이벤트 처리 함수
 	DECLARE_MESSAGE_MAP() // 메시지 맵 매크로
 
-						  // Edit Control 변수 선언
+	// Edit Control 변수 선언
 	CEdit m_editPartNo;     // partNo 입력 컨트롤
 	CEdit m_editQuantity;   // quantity 입력 컨트롤
 	CEdit m_editDate;       // date 입력 컨트롤
