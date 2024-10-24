@@ -48,10 +48,10 @@ void CMSSQLDlg::DoDataExchange(CDataExchange* pDX) {
 BOOL CMSSQLDlg::OnInitDialog() {
 	CDialogEx::OnInitDialog();  // 기본 대화상자 초기화 호출
 
-								// 텍스트 컨트롤에 폰트 적용
+	// 텍스트 컨트롤에 폰트 적용
 	m_staticText.SetFont(&m_font); // m_staticText는 CStatic 변수
 
-								   // COM 라이브러리 초기화
+	// COM 라이브러리 초기화
 	HRESULT hr = CoInitialize(NULL);
 	if (FAILED(hr)) {  // 초기화 실패 시 메시지 박스 표시
 		AfxMessageBox(_T("COM 라이브러리 초기화 실패"));
@@ -65,7 +65,7 @@ BOOL CMSSQLDlg::OnInitDialog() {
 	m_listResult.InsertColumn(1, _T("수량"), LVCFMT_LEFT, 100);  // 두 번째 열에 수량 추가
 	m_listResult.InsertColumn(2, _T("최근 수정 날짜"), LVCFMT_LEFT, 150);  // 세 번째 열에 최근 수정 날짜 추가
 
-																	 // DB에서 데이터를 가져와서 리스트 컨트롤에 추가
+	// DB에서 데이터를 가져와서 리스트 컨트롤에 추가
 	try {
 		_ConnectionPtr conn;  // ADO 연결 포인터
 		hr = conn.CreateInstance(__uuidof(Connection));  // 연결 객체 생성
@@ -137,12 +137,12 @@ void CMSSQLDlg::OnBnClickedAddButton() {
 	CString quantity;  // 수량
 	CString date;  // 날짜
 
-				   // 사용자 입력값 가져오기
+	// 사용자 입력값 가져오기
 	m_editPartNo.GetWindowText(partNo);  // 품번 입력값 가져오기
 	m_editQuantity.GetWindowText(quantity);  // 수량 입력값 가져오기
 	m_editDate.GetWindowText(date);  // 날짜 입력값 가져오기
 
-									 // 입력 필드가 비어 있는지 확인
+	// 입력 필드가 비어 있는지 확인
 	if (partNo.IsEmpty() || quantity.IsEmpty() || date.IsEmpty()) {
 		AfxMessageBox(_T("모든 필드를 입력해주세요."));  // 경고 메시지
 		return;  // 함수 종료
@@ -158,7 +158,7 @@ void CMSSQLDlg::OnBnClickedAddButton() {
 		cmd.CreateInstance(__uuidof(Command));  // 커맨드 객체 생성
 		cmd->ActiveConnection = conn;  // 현재 연결 설정
 
-									   // SQL 쿼리 작성
+		// SQL 쿼리 작성
 		CString sqlQuery;
 		sqlQuery.Format(_T("INSERT INTO material_stock (partNo, quantity, date) VALUES ('%s', %s, '%s')"), partNo, quantity, date);  // INSERT 쿼리 생성
 		cmd->CommandText = _bstr_t(sqlQuery);  // SQL 쿼리 설정
@@ -166,7 +166,7 @@ void CMSSQLDlg::OnBnClickedAddButton() {
 		cmd->Execute(NULL, NULL, adCmdText);  // SQL 쿼리 실행
 		AfxMessageBox(_T("데이터 추가 성공!"));  // 성공 메시지
 
-										  // 추가 후 리스트 갱신
+		// 추가 후 리스트 갱신
 		OnBnClickedRefreshButton();  // 리스트 갱신 함수 호출
 
 		conn->Close();  // 연결 닫기
@@ -182,7 +182,7 @@ void CMSSQLDlg::OnBnClickedSearchButton() {
 	CString partNo;  // 품번
 	m_editPartNo.GetWindowText(partNo);  // 품번 입력값 가져오기
 
-										 // 품번 입력값이 비어 있는지 확인
+	// 품번 입력값이 비어 있는지 확인
 	if (partNo.IsEmpty()) {
 		AfxMessageBox(_T("품번을 입력해주세요."));  // 경고 메시지
 		return;  // 함수 종료
@@ -198,7 +198,7 @@ void CMSSQLDlg::OnBnClickedSearchButton() {
 		cmd.CreateInstance(__uuidof(Command));  // 커맨드 객체 생성
 		cmd->ActiveConnection = conn;  // 현재 연결 설정
 
-									   // SQL 쿼리 작성
+		// SQL 쿼리 작성
 		CString sqlQuery;
 		sqlQuery.Format(_T("SELECT partNo, quantity, date FROM material_stock WHERE partNo = '%s'"), partNo);  // 품번으로 검색하는 쿼리
 		cmd->CommandText = _bstr_t(sqlQuery);  // SQL 쿼리 설정
@@ -250,12 +250,12 @@ void CMSSQLDlg::OnBnClickedEditButton() {
 	CString quantity;  // 수량
 	CString date;  // 날짜
 
-				   // 입력값 가져오기
+	// 입력값 가져오기
 	m_editPartNo.GetWindowText(partNo);  // 품번 입력값 가져오기
 	m_editQuantity.GetWindowText(quantity);  // 수량 입력값 가져오기
 	m_editDate.GetWindowText(date);  // 날짜 입력값 가져오기
 
-									 // 입력 필드가 비어 있는지 확인
+	// 입력 필드가 비어 있는지 확인
 	if (partNo.IsEmpty() || quantity.IsEmpty() || date.IsEmpty()) {
 		AfxMessageBox(_T("모든 필드를 입력해주세요."));  // 경고 메시지
 		return;  // 함수 종료
@@ -271,7 +271,7 @@ void CMSSQLDlg::OnBnClickedEditButton() {
 		cmd.CreateInstance(__uuidof(Command));  // 커맨드 객체 생성
 		cmd->ActiveConnection = conn;  // 현재 연결 설정
 
-									   // SQL 쿼리 작성
+		// SQL 쿼리 작성
 		CString sqlQuery;
 		sqlQuery.Format(_T("UPDATE material_stock SET quantity = %s, date = '%s' WHERE partNo = '%s'"), quantity, date, partNo);  // UPDATE 쿼리 생성
 		cmd->CommandText = _bstr_t(sqlQuery);  // SQL 쿼리 설정
@@ -279,7 +279,7 @@ void CMSSQLDlg::OnBnClickedEditButton() {
 		cmd->Execute(NULL, NULL, adCmdText);  // SQL 쿼리 실행
 		AfxMessageBox(_T("데이터 수정 성공!"));  // 성공 메시지
 
-										  // 수정 후 리스트 갱신
+		// 수정 후 리스트 갱신
 		OnBnClickedRefreshButton();  // 리스트 갱신 함수 호출
 
 		conn->Close();  // 연결 닫기
@@ -295,7 +295,7 @@ void CMSSQLDlg::OnBnClickedDeleteButton() {
 	CString partNo;  // 품번
 	m_editPartNo.GetWindowText(partNo);  // 품번 입력값 가져오기
 
-										 // 품번 입력값이 비어 있는지 확인
+	// 품번 입력값이 비어 있는지 확인
 	if (partNo.IsEmpty()) {
 		AfxMessageBox(_T("삭제할 품번을 입력해주세요."));  // 경고 메시지
 		return;  // 함수 종료
@@ -311,7 +311,7 @@ void CMSSQLDlg::OnBnClickedDeleteButton() {
 		cmd.CreateInstance(__uuidof(Command));  // 커맨드 객체 생성
 		cmd->ActiveConnection = conn;  // 현재 연결 설정
 
-									   // SQL 쿼리 작성
+		// SQL 쿼리 작성
 		CString sqlQuery;
 		sqlQuery.Format(_T("DELETE FROM material_stock WHERE partNo = '%s'"), partNo);  // DELETE 쿼리 생성
 		cmd->CommandText = _bstr_t(sqlQuery);  // SQL 쿼리 설정
@@ -319,7 +319,7 @@ void CMSSQLDlg::OnBnClickedDeleteButton() {
 		cmd->Execute(NULL, NULL, adCmdText);  // SQL 쿼리 실행
 		AfxMessageBox(_T("데이터 삭제 성공!"));  // 성공 메시지
 
-										  // 삭제 후 리스트 갱신
+		// 삭제 후 리스트 갱신
 		OnBnClickedRefreshButton();  // 리스트 갱신 함수 호출
 
 		conn->Close();  // 연결 닫기
@@ -343,7 +343,7 @@ void CMSSQLDlg::OnBnClickedRefreshButton() {
 		cmd.CreateInstance(__uuidof(Command));  // 커맨드 객체 생성
 		cmd->ActiveConnection = conn;  // 현재 연결 설정
 
-									   // material_stock 테이블에서 데이터 선택
+		// material_stock 테이블에서 데이터 선택
 		cmd->CommandText = _bstr_t("SELECT partNo, quantity, date FROM material_stock");
 
 		// 쿼리 실행 및 결과 집합 가져오기
@@ -352,17 +352,17 @@ void CMSSQLDlg::OnBnClickedRefreshButton() {
 		// 리스트 컨트롤 초기화
 		m_listResult.DeleteAllItems();  // 이전 데이터 삭제
 
-										// 새로운 데이터 추가
+		// 새로운 데이터 추가
 		int nItem = 0;  // 리스트의 아이템 인덱스 초기화
 		CString partNo, quantity, date;  // 품번, 수량, 날짜를 저장할 변수 선언
 
-										 // 결과 집합에서 데이터를 읽어 리스트에 추가
+		// 결과 집합에서 데이터를 읽어 리스트에 추가
 		while (!rs->EndOfFile) {  // 결과 집합의 끝까지 반복
 								  // 각 필드의 값 가져오기
 			partNo = (LPCTSTR)(_bstr_t)rs->Fields->Item["partNo"]->Value;  // 품번
 			quantity = (LPCTSTR)(_bstr_t)rs->Fields->Item["quantity"]->Value;  // 수량
 
-																			   // 날짜 형식 변환
+			// 날짜 형식 변환
 			_variant_t dateVariant = rs->Fields->Item["date"]->Value;  // 날짜 필드 값 가져오기
 			if (dateVariant.vt == VT_DATE) {  // 날짜 형식 확인
 				COleDateTime oleDate = (COleDateTime)dateVariant;  // COleDateTime 객체로 변환
@@ -416,7 +416,7 @@ HCURSOR CMSSQLDlg::OnQueryDragIcon() {
 
 void CMSSQLDlg::OnLvnItemchangedListResult(NMHDR *pNMHDR, LRESULT *pResult) {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);  // 리스트 뷰의 알림 메시지 구조체를 캐스팅
-																  // TODO: Add your control notification handler code here
+	 // TODO: Add your control notification handler code here
 	*pResult = 0;  // 결과 값 설정
 }
 
